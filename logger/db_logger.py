@@ -57,7 +57,9 @@ def backup_logs():
         print(f"Backup created: {backup_file}")
 
 def main():
-    os.chdir("logger")
+    current_directory = os.getcwd()
+    if os.path.basename(current_directory) != "logger":
+        os.chdir("logger")
     os.makedirs("logs", exist_ok=True)
     if os.path.exists("logs/cooler.txt") or os.path.exists("logs/darkbox.txt") or os.path.exists("logs/outside.txt"):
         backup_logs()
