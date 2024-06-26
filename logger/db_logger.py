@@ -10,6 +10,10 @@ def GetTimestamp():
     return int(time.time() * 1000)
 
 def WriteTxtFile(name, device):
+    current_directory = os.getcwd()
+    if os.path.basename(current_directory) != "logger":
+        os.chdir("logger")
+    
     temperature, humidity = GetValuesFromDevice(device)
     if temperature==-404 and humidity==-404:
         return
@@ -37,6 +41,10 @@ def GetValuesFromDevice(device):
     return temperature_c, humidity
 
 def backup_logs():
+    current_directory = os.getcwd()
+    if os.path.basename(current_directory) != "logger":
+        os.chdir("logger")
+    
     # Create a backup folder if it doesn't exist
     backup_dir = "./logs/backups"
     os.makedirs(backup_dir, exist_ok=True)
