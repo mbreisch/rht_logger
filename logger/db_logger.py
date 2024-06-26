@@ -15,7 +15,7 @@ def WriteTxtFile(name, device):
         return
     timestamp = GetTimestamp()
     
-    file_path = f"~/logger/logs/{name}.txt"
+    file_path = os.path.expanduser(f"~/logger/logs/{name}.txt")
     print(f"Using file {file_path}")
     
     line_to_write = f"{timestamp}:{name}:{temperature};{humidity}\n"
@@ -38,7 +38,7 @@ def GetValuesFromDevice(device):
 
 def backup_logs():
     # Create a backup folder if it doesn't exist
-    backup_dir = "~/logger/logs/backups"
+    backup_dir = os.path.expanduser("~/logger/logs/backups")
     os.makedirs(backup_dir, exist_ok=True)
 
     # Generate timestamp for the backup file
@@ -47,7 +47,7 @@ def backup_logs():
     
     # Iterate over each log file and copy it to backups with timestamp
     for name in ["cooler", "darkbox", "outside"]:
-        log_file = f"~/logger/logs/{name}.txt"
+        log_file =  os.path.expanduser(f"~/logger/logs/{name}.txt")
         backup_file = f"{backup_dir}/{backup_file_prefix}_{name}.txt"
         try:
             shutil.copy(log_file, backup_file)
@@ -57,8 +57,8 @@ def backup_logs():
         print(f"Backup created: {backup_file}")
 
 def main():
-    os.makedirs("~/logger/logs", exist_ok=True)
-    if os.path.exists("~/logger/logs/cooler.txt") or os.path.exists("~/logger/logs/darkbox.txt") or os.path.exists("~/logger/logs/outside.txt"):
+    os.makedirs(os.path.expanduser(f"~/logger/logs"), exist_ok=True)
+    if os.path.exists(os.path.expanduser(f"~/logger/logs/cooler.txt") or os.path.expanduser(f"~/logger/logs/outside.txt") or os.path.expanduser(f"~/logger/logs/darkbox.txt"):
         backup_logs()
     
     #Define devices
