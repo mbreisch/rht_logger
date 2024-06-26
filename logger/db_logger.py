@@ -58,7 +58,7 @@ def backup_logs():
 
 def main():
     os.makedirs(os.path.expanduser(f"~/logger/logs"), exist_ok=True)
-    if os.path.exists(os.path.expanduser(f"~/logger/logs/cooler.txt") or os.path.expanduser(f"~/logger/logs/outside.txt") or os.path.expanduser(f"~/logger/logs/darkbox.txt"):
+    if os.path.exists(os.path.expanduser(f"~/logger/logs/cooler.txt")) or os.path.exists(os.path.expanduser(f"~/logger/logs/outside.txt")) or os.path.exists(os.path.expanduser(f"~/logger/logs/darkbox.txt")):
         backup_logs()
     
     #Define devices
