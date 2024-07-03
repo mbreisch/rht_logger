@@ -5,6 +5,12 @@ import adafruit_dht
 import board
 import shutil
 
+status = {
+    "timestamp": "0",
+    "temperature": 0,
+    "humidity": 0
+}
+
 def GetTimestamp():
     """Get the current timestamp in Unix format (milliseconds)."""
     return int(time.time() * 1000)
@@ -14,6 +20,10 @@ def WriteTxtFile(name, device):
     if temperature==-404 and humidity==-404:
         return
     timestamp = GetTimestamp()
+    
+    status["timestamp"] = timestamp
+    status["temperature"] = temperature
+    status["humidity"] = humidity
     
     file_path = os.path.expanduser(f"~/logger/logs/{name}.txt")
     print(f"Using file {file_path}")
@@ -56,7 +66,7 @@ def backup_logs():
             print(err)
         print(f"Backup created: {backup_file}")
 
-def main():
+def run_rht():
     os.makedirs(os.path.expanduser(f"~/logger/logs"), exist_ok=True)
     if os.path.exists(os.path.expanduser(f"~/logger/logs/cooler.txt")) or os.path.exists(os.path.expanduser(f"~/logger/logs/outside.txt")) or os.path.exists(os.path.expanduser(f"~/logger/logs/darkbox.txt")):
         backup_logs()
@@ -72,6 +82,3 @@ def main():
         for name,device in zip(names,devices):
             WriteTxtFile(name, device)
         time.sleep(10)
-
-if __name__ == "__main__":
-    main()

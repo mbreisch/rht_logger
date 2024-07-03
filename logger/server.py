@@ -19,13 +19,13 @@ get_rht_status = {
     "humidity": 0
 }
 
-@app.route('/status')
+@app.route('/fan_status')
 def get_fan_status():
     return jsonify(relay.status)
 
-# @app.route('/rht_status')
-# def get_rht_status():
-#     return jsonify(rht.status)
+@app.route('/rht_status')
+def get_rht_status():
+    return jsonify(rht.status)
 
 def run_flask():
     app.run(host='0.0.0.0', port=5000)
@@ -39,9 +39,9 @@ if __name__ == "__main__":
         fan_thread.daemon = True
         fan_thread.start()
         
-        # rht_thread = Thread(target=rht.run_rht)
-        # rht_thread.daemon = True
-        # rht_thread.start()
+        rht_thread = Thread(target=rht.run_rht)
+        rht_thread.daemon = True
+        rht_thread.start()
         
         try:
             flask_thread.join()
