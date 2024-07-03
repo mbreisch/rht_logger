@@ -43,3 +43,9 @@ if __name__ == "__main__":
         # rht_thread.daemon = True
         # rht_thread.start()
         
+        try:
+            flask_thread.join()
+            fan_thread.join()
+            # rht_thread.join()
+        except KeyboardInterrupt:
+            print("Program interrupted.")
