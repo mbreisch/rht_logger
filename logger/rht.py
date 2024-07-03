@@ -6,6 +6,7 @@ import board
 import shutil
 
 status = {
+    "device": "None",
     "timestamp": "0",
     "temperature": 0,
     "humidity": 0
@@ -21,6 +22,7 @@ def WriteTxtFile(name, device):
         return
     timestamp = GetTimestamp()
     
+    status["device"] = name
     status["timestamp"] = timestamp
     status["temperature"] = temperature
     status["humidity"] = humidity
