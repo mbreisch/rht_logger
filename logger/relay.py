@@ -1,11 +1,5 @@
 import RPi.GPIO as GPIO
 import time
-from flask import Flask, jsonify
-from flask_cors import CORS
-from threading import Thread
-
-app = Flask(__name__)
-CORS(app)
 
 RELAY_PIN = 26
 status = {
@@ -40,24 +34,9 @@ def countdown(minutes):
 def cleanup():
     GPIO.cleanup()
 
-@app.route('/status')
-def get_status():
-    return jsonify(status)
-
-def run_flask():
-    app.run(host='0.0.0.0', port=5000)
-
-if __name__ == "__main__":
+def run_relay():
     try:
         setup_gpio(RELAY_PIN)
-        
-        # Start Flask server in a separate thread
-        flask_thread = Thread(target=run_flask)
-        flask_thread.daemon = True
-        flask_thread.start()
-
-        print("Flask server is up and running...")
-
         while True:
             # Turn off for 30 minutes with countdown
             turn_off(RELAY_PIN)
@@ -66,7 +45,6 @@ if __name__ == "__main__":
             # Turn on for 5 minutes with countdown
             turn_on(RELAY_PIN)
             countdown(10)
-
     except KeyboardInterrupt:
         print("Program interrupted.")
     finally:
