@@ -46,6 +46,6 @@ if __name__ == "__main__":
         try:
             flask_thread.join()
             fan_thread.join()
-            # rht_thread.join()
+            rht_thread.join()
         except KeyboardInterrupt:
             print("Program interrupted.")

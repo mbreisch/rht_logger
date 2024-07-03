@@ -6,10 +6,9 @@ import board
 import shutil
 
 status = {
-    "device": "None",
-    "timestamp": "0",
-    "temperature": 0,
-    "humidity": 0
+    "cooler" : {"timestamp": "0","temperature": 0,"humidity": 0},
+    "darkbox" : {"timestamp": "0","temperature": 0,"humidity": 0},
+    "outside" : {"timestamp": "0","temperature": 0,"humidity": 0}
 }
 
 def GetTimestamp():
@@ -22,10 +21,9 @@ def WriteTxtFile(name, device):
         return
     timestamp = GetTimestamp()
     
-    status["device"] = name
-    status["timestamp"] = timestamp
-    status["temperature"] = temperature
-    status["humidity"] = humidity
+    status[name]["temperature"] = temperature
+    status[name]["humidity"] = humidity
+    status[name]["timestamp"] = timestamp
     
     file_path = os.path.expanduser(f"~/logger/logs/{name}.txt")
     print(f"Using file {file_path}")
