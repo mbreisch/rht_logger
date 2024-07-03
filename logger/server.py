@@ -14,9 +14,9 @@ fan_status = {
 }
 
 get_rht_status = {
-    "timestamp": "0",
-    "temperature": 0,
-    "humidity": 0
+    "cooler" : {"timestamp": "0","temperature": 0,"humidity": 0},
+    "darkbox" : {"timestamp": "0","temperature": 0,"humidity": 0},
+    "outside" : {"timestamp": "0","temperature": 0,"humidity": 0}
 }
 
 @app.route('/fan_status')
