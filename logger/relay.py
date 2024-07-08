@@ -40,11 +40,11 @@ def run_relay():
         while True:
             # Turn off for 30 minutes with countdown
             turn_off(RELAY_PIN)
-            countdown(10)
+            countdown(2)
 
             # Turn on for 5 minutes with countdown
             turn_on(RELAY_PIN)
-            countdown(15)
+            countdown(1)
     except KeyboardInterrupt:
         print("Program interrupted.")
     finally:
