@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 import time
+from time import sleep
 
 RELAY_PIN = 26
 status = {
@@ -44,10 +45,11 @@ def run_relay():
         setup_gpio(RELAY_PIN)
         while True:
             if fan_control_data.get("mode") == "manual":
-                if fan_control_data.get("state") == 1:
-                    turn_on(RELAY_PIN)
-                else:
-                    turn_off(RELAY_PIN)
+                    if fan_control_data.get("state") == 1:
+                        turn_on(RELAY_PIN)
+                    else:
+                        turn_off(RELAY_PIN)
+                    sleep(1)
             elif fan_control_data.get("mode") == "auto":
                 while True:
                     turn_off(RELAY_PIN)
@@ -60,7 +62,7 @@ def run_relay():
                     if fan_control_data.get("mode") == "manual":
                         break
             else:
-                print("Invalid mode. Exiting.")
+                sleep(1)
     except KeyboardInterrupt:
         print("Program interrupted.")
     finally:
