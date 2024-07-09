@@ -26,6 +26,8 @@ def turn_off(pin):
 
 def countdown(minutes):
     for remaining in range(minutes * 60, 0, -1):
+        if fan_control_data.get("mode") == "manual":
+                break
         minutes_remaining = remaining // 60
         seconds_remaining = remaining % 60
         status["countdown"] = f"{minutes_remaining:02d}:{seconds_remaining:02d}"
@@ -40,14 +42,24 @@ def cleanup():
 def run_relay():
     try:
         setup_gpio(RELAY_PIN)
-        while True:
-            # Turn off for 30 minutes with countdown
-            turn_off(RELAY_PIN)
-            countdown(2)
+        if fan_control_data.get("mode") == "manual":
+            if fan_control_data.get("state") == 1:
+                turn_on(RELAY_PIN)
+            else:
+                turn_off(RELAY_PIN)
+        elif fan_control_data.get("mode") == "auto":
+            while True:
+                turn_off(RELAY_PIN)
+                countdown(fan_control_data.get("offTime"))
+                if fan_control_data.get("mode") == "manual":
+                    break
 
-            # Turn on for 5 minutes with countdown
-            turn_on(RELAY_PIN)
-            countdown(1)
+                turn_on(RELAY_PIN)
+                countdown(fan_control_data.get("onTime"))
+                if fan_control_data.get("mode") == "manual":
+                    break
+        else:
+            print("Invalid mode. Exiting.")
     except KeyboardInterrupt:
         print("Program interrupted.")
     finally:
