@@ -27,7 +27,6 @@ def turn_off(pin):
         status["relay"] = "OFF"
         print(f"Relay on pin {pin} is now OFF.")
 
-
 def countdown(minutes):
     for remaining in range(minutes * 60, 0, -1):
         if fan_control_data.get("mode") == "manual":
