@@ -42,24 +42,25 @@ def cleanup():
 def run_relay():
     try:
         setup_gpio(RELAY_PIN)
-        if fan_control_data.get("mode") == "manual":
-            if fan_control_data.get("state") == 1:
-                turn_on(RELAY_PIN)
-            else:
-                turn_off(RELAY_PIN)
-        elif fan_control_data.get("mode") == "auto":
-            while True:
-                turn_off(RELAY_PIN)
-                countdown(fan_control_data.get("offTime"))
-                if fan_control_data.get("mode") == "manual":
-                    break
+        while True:
+            if fan_control_data.get("mode") == "manual":
+                if fan_control_data.get("state") == 1:
+                    turn_on(RELAY_PIN)
+                else:
+                    turn_off(RELAY_PIN)
+            elif fan_control_data.get("mode") == "auto":
+                while True:
+                    turn_off(RELAY_PIN)
+                    countdown(fan_control_data.get("offTime"))
+                    if fan_control_data.get("mode") == "manual":
+                        break
 
-                turn_on(RELAY_PIN)
-                countdown(fan_control_data.get("onTime"))
-                if fan_control_data.get("mode") == "manual":
-                    break
-        else:
-            print("Invalid mode. Exiting.")
+                    turn_on(RELAY_PIN)
+                    countdown(fan_control_data.get("onTime"))
+                    if fan_control_data.get("mode") == "manual":
+                        break
+            else:
+                print("Invalid mode. Exiting.")
     except KeyboardInterrupt:
         print("Program interrupted.")
     finally:
