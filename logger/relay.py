@@ -43,6 +43,7 @@ def cleanup():
     GPIO.cleanup()
 
 def run_relay():
+    global fan_control_data
     try:
         setup_gpio(RELAY_PIN)
         while True:
