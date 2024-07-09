@@ -1,9 +1,11 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 from threading import Thread
+import requests
 
 import relay
 import rht
+import client
 
 app = Flask(__name__)
 CORS(app)
@@ -35,6 +37,10 @@ if __name__ == "__main__":
         flask_thread.daemon = True
         flask_thread.start()
         
+        client_thread = Thread(target=client.run_client)
+        client_thread.daemon = True
+        client_thread.start()
+        
         fan_thread = Thread(target=relay.run_relay)
         fan_thread.daemon = True
         fan_thread.start()
@@ -45,6 +51,7 @@ if __name__ == "__main__":
         
         try:
             flask_thread.join()
+            client_thread.join()
             fan_thread.join()
             rht_thread.join()
         except KeyboardInterrupt:

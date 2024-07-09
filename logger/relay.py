@@ -7,6 +7,8 @@ status = {
     "countdown": "30:00"
 }
 
+fan_control_data = {"mode": "null","offTime": -1,"onTime": -1,"state": -1}
+
 def setup_gpio(pin):
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(pin, GPIO.OUT)
@@ -29,6 +31,7 @@ def countdown(minutes):
         status["countdown"] = f"{minutes_remaining:02d}:{seconds_remaining:02d}"
         print(f"\rCountdown: {status['countdown']}", end="")
         time.sleep(1)
+        print(fan_control_data)
     print()
 
 def cleanup():
