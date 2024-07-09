@@ -51,12 +51,12 @@ def run_relay():
             elif fan_control_data.get("mode") == "auto":
                 while True:
                     turn_off(RELAY_PIN)
-                    countdown(float(fan_control_data.get("offTime")))
+                    countdown(int(fan_control_data.get("offTime")))
                     if fan_control_data.get("mode") == "manual":
                         break
 
                     turn_on(RELAY_PIN)
-                    countdown(float(fan_control_data.get("onTime")))
+                    countdown(int(fan_control_data.get("onTime")))
                     if fan_control_data.get("mode") == "manual":
                         break
             else:
