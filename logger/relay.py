@@ -29,7 +29,7 @@ def countdown(minutes):
         minutes_remaining = remaining // 60
         seconds_remaining = remaining % 60
         status["countdown"] = f"{minutes_remaining:02d}:{seconds_remaining:02d}"
-        print(f"\rCountdown: {status['countdown']}", end="")
+        print(f"\rCountdown: {status['countdown']} ", end="")
         time.sleep(1)
         print(fan_control_data)
     print()

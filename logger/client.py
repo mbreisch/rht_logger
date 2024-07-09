@@ -6,9 +6,9 @@ from time import sleep
 
 import relay
 
-app = Flask(__name__)
+client_app = Flask(__name__)
 
-@app.route('/get_fan_control_data', methods=['GET'])
+@client_app.route('/get_fan_control_data', methods=['GET'])
 def get_fan_control_data():
     url = 'http://raspberrypisipm.am14.uni-tuebingen.de:5000/ambient/fan_control'
     try:
@@ -22,8 +22,13 @@ def get_fan_control_data():
         return jsonify({'error': f'Request failed: {str(e)}'})
     
 def run_client():
-    app.run(host='0.0.0.0', port=5001)
-    
     while True:
         relay.fan_control_data = get_fan_control_data()
         sleep(1)
+
+if __name__ == "__main__":
+    client_thread = Thread(target=run_client)
+    client_thread.daemon = True
+    client_thread.start()
+    
+    client_app.run(host='0.0.0.0', port=5001)
