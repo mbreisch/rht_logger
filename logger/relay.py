@@ -16,14 +16,17 @@ def setup_gpio(pin):
     GPIO.output(pin, GPIO.LOW)
 
 def turn_on(pin):
-    GPIO.output(pin, GPIO.HIGH)
-    status["relay"] = "ON"
-    print(f"Relay on pin {pin} is now ON.")
+    if status.get("relay") != "ON":
+        GPIO.output(pin, GPIO.HIGH)
+        status["relay"] = "ON"
+        print(f"Relay on pin {pin} is now ON.")
 
 def turn_off(pin):
-    GPIO.output(pin, GPIO.LOW)
-    status["relay"] = "OFF"
-    print(f"Relay on pin {pin} is now OFF.")
+    if status.get("relay") != "OFF":
+        GPIO.output(pin, GPIO.LOW)
+        status["relay"] = "OFF"
+        print(f"Relay on pin {pin} is now OFF.")
+
 
 def countdown(minutes):
     for remaining in range(minutes * 60, 0, -1):
